@@ -12,16 +12,10 @@ let package = Package(
         .watchOS(.v8)
     ],
     products: [
-        // Core networking engine
-        .library(
-            name: "PulseKit",
-            targets: ["PulseKit"]
-        ),
-        // Optional SwiftUI debug UI layer
-        .library(
-            name: "PulseKitUI",
-            targets: ["PulseKitUI"]
-        )
+        .library(name: "PulseKit",          targets: ["PulseKit"]),
+        .library(name: "PulseKitGraphQL",   targets: ["PulseKitGraphQL"]),
+        .library(name: "PulseKitWebSocket", targets: ["PulseKitWebSocket"]),
+        .library(name: "PulseKitUI",        targets: ["PulseKitUI"]),
     ],
     dependencies: [],
     targets: [
@@ -32,16 +26,21 @@ let package = Package(
             swiftSettings: [
                 .enableExperimentalFeature("StrictConcurrency")
             ]
+        ),          // core only — REST, plugins, cache
+        .target(
+            name: "PulseKitGraphQL",
+            dependencies: ["PulseKit"],          // builds on core, not the reverse
+            path: "Sources/PulseKitGraphQL"
+        ),
+        .target(
+            name: "PulseKitWebSocket",
+            dependencies: ["PulseKit"],
+            path: "Sources/PulseKitWebSocket"
         ),
         .target(
             name: "PulseKitUI",
             dependencies: ["PulseKit"],
             path: "Sources/PulseKitUI"
         ),
-        .testTarget(
-            name: "PulseKitTests",
-            dependencies: ["PulseKit"],
-            path: "Tests/PulseKitTests"
-        )
     ]
 )
