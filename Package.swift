@@ -13,8 +13,6 @@ let package = Package(
     ],
     products: [
         .library(name: "PulseKit",          targets: ["PulseKit"]),
-        .library(name: "PulseKitGraphQL",   targets: ["PulseKitGraphQL"]),
-        .library(name: "PulseKitWebSocket", targets: ["PulseKitWebSocket"]),
         .library(name: "PulseKitUI",        targets: ["PulseKitUI"]),
     ],
     dependencies: [],
@@ -27,16 +25,6 @@ let package = Package(
                 .enableExperimentalFeature("StrictConcurrency")
             ]
         ),          // core only — REST, plugins, cache
-        .target(
-            name: "PulseKitGraphQL",
-            dependencies: ["PulseKit"],          // builds on core, not the reverse
-            path: "Sources/PulseKitGraphQL"
-        ),
-        .target(
-            name: "PulseKitWebSocket",
-            dependencies: ["PulseKit"],
-            path: "Sources/PulseKitWebSocket"
-        ),
         .target(
             name: "PulseKitUI",
             dependencies: ["PulseKit"],
